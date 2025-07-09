@@ -1,0 +1,96 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Faisal Rehman Ansari</title>
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+    header {
+      background-color: #04BADE;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #033a44;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #04BADE;
+    }
+    .info, .social {
+      margin-bottom: 20px;
+    }
+    .info p, .social a {
+      font-size: 16px;
+      margin: 8px 0;
+    }
+    .social a {
+      text-decoration: none;
+      color: #04BADE;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Contact Me</h1>
+  <p>Let's connect and collaborate</p>
+</header>
+
+<nav>
+  <a href="{{ url_for('homepage') }}">Home</a>
+  <a href="{{ url_for('about') }}">About Me</a>
+  <a href="{{ url_for('education') }}">Education</a>
+  <a href="{{ url_for('experience') }}">Experience</a>
+  <a href="{{ url_for('internships') }}">Internships</a>
+  <a href="{{ url_for('certifications') }}">Certifications</a>
+  <a href="{{ url_for('blogs') }}">Blogs</a>
+  <a href="{{ url_for('reviews') }}">Reviews</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <a href="{{ url_for('resume') }}">Resume</a>
+</nav>
+
+<div class="container">
+  <h2>Contact Info</h2>
+  <div class="info">
+    <p><strong>Email:</strong> rehmanansarifaisal@gmail.com</p>
+    <p><strong>Phone:</strong> +92 323 2926011</p>
+    <p><strong>Location:</strong> Nawabshah, Sindh, Pakistan</p>
+    <p><strong>Freelance Available:</strong> Yes</p>
+    <p><strong>Languages:</strong> Sindhi, Urdu, English, Hindi</p>
+  </div>
+
+  <h2>Social Media</h2>
+  <div class="social">
+    <a href="https://www.linkedin.com/in/rehmanansarifaisal" target="_blank">🔗 LinkedIn</a>
+    <a href="https://www.facebook.com/rehmanansarifaisal" target="_blank">📘 Facebook</a>
+    <a href="https://www.instagram.com/rehmanansarifaisal" target="_blank">📸 Instagram</a>
+  </div>
+</div>
+
+</body>
+</html>

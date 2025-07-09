@@ -1,0 +1,115 @@
+<!-- about.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me - Faisal Rehman Ansari</title>
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+    header {
+      background-color: #04BADE;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #033a44;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .profile img {
+      max-width: 250px;
+      border-radius: 12px;
+      height: auto;
+    }
+    .profile-info {
+      flex: 1;
+    }
+    .profile-info h2 {
+      color: #04BADE;
+    }
+    .skills {
+      margin-top: 20px;
+    }
+    .skills ul {
+      list-style-type: square;
+      padding-left: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>About Me</h1>
+</header>
+
+<nav>
+  <a href="{{ url_for('homepage') }}">Home</a>
+  <a href="{{ url_for('about') }}">About Me</a>
+  <a href="{{ url_for('education') }}">Education</a>
+  <a href="{{ url_for('experience') }}">Experience</a>
+  <a href="{{ url_for('internships') }}">Internships</a>
+  <a href="{{ url_for('certifications') }}">Certifications</a>
+  <a href="{{ url_for('blogs') }}">Blogs</a>
+  <a href="{{ url_for('reviews') }}">Reviews</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <a href="{{ url_for('resume') }}">Resume</a>
+</nav>
+
+<div class="container">
+  <div class="profile">
+    <img src="static/uploads/images/Profile.JPG" alt="Faisal Rehman Ansari">
+    <div class="profile-info">
+      <h2>Faisal Rehman Ansari</h2>
+      <p><strong>Artificial Intelligence Engineer | Python Developer | Multimedia Creator</strong></p>
+      <p>
+        I am a graduate in Artificial Intelligence from Quaid-e-Awam University of Engineering, Science and Technology (QUEST), Nawabshah. Apart from my formal education, I am passionate about developing intelligent systems and have strong programming skills, particularly in Python. I also excel in graphic design, infographics, 3D modeling using Blender (except sculpting), animation, and professional video editing (short films, reels, 3D logo animations).
+      </p>
+      <p>
+        Additionally, I have a deep love for poetry — I write and read in English, Urdu, and Sindhi. My creative mindset and blend of technical and artistic skills make me a versatile contributor in any project I take on.
+      </p>
+    </div>
+  </div>
+
+  <div class="skills">
+    <h3>Technical & Creative Skills</h3>
+    <ul>
+      <li>Python Programming</li>
+      <li>AI & Machine Learning Fundamentals</li>
+      <li>3D Modeling & Animation (Blender)</li>
+      <li>Video Editing (Filmora Pro, CapCut Pro)</li>
+      <li>Graphic Design & Infographics</li>
+      <li>Web Design (HTML/CSS)</li>
+      <li>Poetry Writing (Urdu, Sindhi, English)</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

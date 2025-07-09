@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard - Faisal Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #04BADE;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"], button {
+      background-color: #04BADE;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    input[type="submit"]:hover,
+    button:hover {
+      background-color: #0398b5;
+    }
+
+    .blog-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .blog-card {
+      background: #fff;
+      border-radius: 10px;
+      width: 280px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .blog-card img, .blog-card video {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .blog-card h3 {
+      color: #04BADE;
+      margin: 0 0 10px;
+    }
+
+    .blog-card p {
+      font-size: 14px;
+      color: #444;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      margin-top: 10px;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Admin Dashboard</h1>
+
+  <!-- 📝 Upload Blog Section -->
+  <div class="section">
+    <h2>📝 Upload New Blog Post</h2>
+    <form action="/upload_blog" method="POST" enctype="multipart/form-data">
+      <label for="title">Blog Title:</label>
+      <input type="text" name="title" id="title" required />
+
+      <label for="description">Blog Description:</label>
+      <textarea name="description" id="description" rows="6" required></textarea>
+
+      <label for="image">Upload Image (Optional):</label>
+      <input type="file" name="image" accept="image/*" />
+
+      <label for="video">Upload Video (Optional):</label>
+      <input type="file" name="video" accept="video/*" />
+
+      <input type="submit" value="Upload Blog Post" />
+    </form>
+  </div>
+
+  <!-- ✅ Delete Blog Section -->
+  {% if blogs %}
+  <div class="section">
+    <h2>🗑️ Manage Blog Posts</h2>
+    <div class="blog-grid">
+      {% for blog in blogs %}
+        <div class="blog-card">
+          {% if blog['image'] %}
+            <img src="{{ url_for('static', filename=blog['image']) }}" alt="Blog Image">
+          {% endif %}
+          <h3>{{ blog['title'] }}</h3>
+          <p>{{ blog['description'][:100] }}...</p>
+          {% if blog['video'] %}
+            <video controls>
+              <source src="{{ url_for('static', filename=blog['video']) }}" type="video/mp4">
+            </video>
+          {% endif %}
+          <form action="{{ url_for('delete_blog', blog_id=blog['id']) }}" method="POST">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- 🛠 Modify Pages Section -->
+  <div class="section">
+    <h2>🛠 Modify Page Content</h2>
+    <label for="page">Select Page:</label>
+    <select name="page" id="page" onchange="loadPageContent()">
+      <option value="">-- Select a page --</option>
+      {% for page in pages %}
+        <option value="{{ page }}">{{ page.replace('.html', '').capitalize() }}</option>
+      {% endfor %}
+    </select>
+
+    <form id="editForm">
+      <input type="hidden" name="page" id="formPage" />
+
+      <label for="content">Current Content:</label>
+      <textarea name="content" id="content" rows="15" required></textarea>
+
+      <input type="submit" value="Update Page" />
+    </form>
+  </div>
+
+  <script>
+    function loadPageContent() {
+      const selectedPage = document.getElementById("page").value;
+      document.getElementById("formPage").value = selectedPage;
+
+      if (!selectedPage) {
+        document.getElementById("content").value = '';
+        return;
+      }
+
+      fetch(`/api/get_page_content?page=${encodeURIComponent(selectedPage)}`)
+        .then(response => {
+          if (!response.ok) throw new Error("Error loading content.");
+          return response.json();
+        })
+        .then(data => {
+          if (data.error) {
+            alert("Error: " + data.error);
+            document.getElementById("content").value = '';
+          } else {
+            document.getElementById("content").value = data.content;
+          }
+        })
+        .catch(error => {
+          alert("Failed to load content.");
+          console.error(error);
+        });
+    }
+
+    document.getElementById('editForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const page = document.getElementById('formPage').value;
+      const content = document.getElementById('content').value;
+
+      if (!page) {
+        alert('Please select a page first.');
+        return;
+      }
+
+      fetch('/api/save_page_content', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ page, content })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Page updated successfully!');
+        } else {
+          alert('Error saving page: ' + (data.error || 'Unknown error'));
+        }
+      })
+      .catch(error => {
+        alert('Failed to save content.');
+        console.error(error);
+      });
+    });
+  </script>
+
+</body>
+</html>

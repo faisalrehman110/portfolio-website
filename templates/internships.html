@@ -1,0 +1,95 @@
+<!-- internships.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Internships - Faisal Rehman Ansari</title>
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+    header {
+      background-color: #04BADE;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #033a44;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .intern-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .intern-card h3 {
+      color: #04BADE;
+      margin-bottom: 8px;
+    }
+    .intern-card span {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .intern-card p {
+      color: #444;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>My Internships</h1>
+</header>
+
+<nav>
+  <a href="{{ url_for('homepage') }}">Home</a>
+  <a href="{{ url_for('about') }}">About Me</a>
+  <a href="{{ url_for('education') }}">Education</a>
+  <a href="{{ url_for('experience') }}">Experience</a>
+  <a href="{{ url_for('internships') }}">Internships</a>
+  <a href="{{ url_for('certifications') }}">Certifications</a>
+  <a href="{{ url_for('blogs') }}">Blogs</a>
+  <a href="{{ url_for('reviews') }}">Reviews</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <a href="{{ url_for('resume') }}">Resume</a>
+</nav>
+
+<div class="container">
+
+  <div class="intern-card">
+    <h3>RogueNova Solutions – Summer Internship</h3>
+    <span>Duration: 2 Month</span>
+    <p>Started as a 2-month internship, later shortened to 1 month due to excellent performance. Worked as a Video Editor & 3D Artist. Tasks included creating animated content, editing short films, color grading, audio syncing, and 3D logo animations using Blender and Filmora Pro.</p>
+  </div>
+
+  <div class="intern-card">
+    <h3>Pakistan Meteorology Department – Winter Internship</h3>
+    <span>Duration: 10–15 Days</span>
+    <p>Focused on weather and forecasting. Activities included tours and departmental guidance on meteorological data and instruments. Less hands-on work, more observational and educational exposure.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

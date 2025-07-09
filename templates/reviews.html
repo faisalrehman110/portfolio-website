@@ -1,0 +1,128 @@
+<!-- templates/reviews.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reviews - Faisal Rehman Ansari</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #04BADE;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #033a44;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    form input[type="submit"] {
+      background: #04BADE;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    form input[type="submit"]:hover {
+      background: #0398b5;
+    }
+    .review {
+      border-top: 1px solid #ddd;
+      margin-top: 20px;
+      padding-top: 20px;
+    }
+    .stars {
+      color: gold;
+    }
+    .review-email {
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Share Your Review</h1>
+</header>
+
+<nav>
+  <a href="{{ url_for('homepage') }}">Home</a>
+  <a href="{{ url_for('about') }}">About Me</a>
+  <a href="{{ url_for('education') }}">Education</a>
+  <a href="{{ url_for('experience') }}">Experience</a>
+  <a href="{{ url_for('internships') }}">Internships</a>
+  <a href="{{ url_for('certifications') }}">Certifications</a>
+  <a href="{{ url_for('blogs') }}">Blogs</a>
+  <a href="{{ url_for('reviews') }}">Reviews</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <a href="{{ url_for('resume') }}">Resume</a>
+</nav>
+
+<div class="container">
+  <form action="{{ url_for('submit_review') }}" method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Rating:</label>
+    <select name="rating" required>
+      <option value="">Select</option>
+      {% for i in range(1, 6) %}
+        <option value="{{ i }}">{{ i }} Star{% if i > 1 %}s{% endif %}</option>
+      {% endfor %}
+    </select>
+
+    <label>Comment:</label>
+    <textarea name="comment" rows="4" required></textarea>
+
+    <input type="submit" value="Post Review">
+  </form>
+
+  {% if reviews %}
+    {% for review in reviews|reverse %}
+      <div class="review">
+        <strong>{{ review.name }}</strong> 
+        <span class="review-email">({{ review.email }})</span><br>
+        <span class="stars">{{ '★' * review.rating }}{{ '☆' * (5 - review.rating) }}</span>
+        <p>{{ review.comment }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No reviews yet. Be the first to post one!</p>
+  {% endif %}
+</div>
+
+</body>
+</html>

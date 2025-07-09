@@ -1,0 +1,98 @@
+<!-- certifications.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certifications - Faisal Rehman Ansari</title>
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+    header {
+      background-color: #04BADE;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #033a44;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      color: #04BADE;
+      margin-bottom: 10px;
+    }
+    .card p {
+      color: #444;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>My Certifications & Achievements</h1>
+</header>
+
+<nav>
+  <a href="{{ url_for('homepage') }}">Home</a>
+  <a href="{{ url_for('about') }}">About Me</a>
+  <a href="{{ url_for('education') }}">Education</a>
+  <a href="{{ url_for('experience') }}">Experience</a>
+  <a href="{{ url_for('internships') }}">Internships</a>
+  <a href="{{ url_for('certifications') }}">Certifications</a>
+  <a href="{{ url_for('blogs') }}">Blogs</a>
+  <a href="{{ url_for('reviews') }}">Reviews</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <a href="{{ url_for('resume') }}">Resume</a>
+</nav>
+
+<div class="container">
+
+  <div class="card">
+    <h3>Python Programming Appreciation Certificate</h3>
+    <p>Awarded by QUEST University for performance in Python projects and theory.</p>
+  </div>
+
+  <div class="card">
+    <h3>Blood Donation Certificate</h3>
+    <p>Recognized for volunteering in the university’s health initiative program.</p>
+  </div>
+
+  <div class="card">
+    <h3>Internship Certificate - RogueNova Solutions</h3>
+    <p>Completed 1-month internship as Video Editor & 3D Artist and promoted based on performance.</p>
+  </div>
+
+  <div class="card">
+    <h3>Internship Certificate - Pakistan Meteorology Department</h3>
+    <p>Participated in a 10–15 day winter internship including department tours related to weather forecasting.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
