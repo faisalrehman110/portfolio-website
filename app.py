@@ -3,9 +3,28 @@ import os
 import json
 from datetime import datetime
 from werkzeug.utils import secure_filename
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Replace with a strong secret key
+
+JSONBIN_ID = '686ebb23e3d25703b38ccbf3'
+JSONBIN_API_KEY = '$2a$10$H7CrjqiobZvthbDRzEh5zuPI0g3q8ehkvBVsutFAgBfRl983upnyS'
+JSONBIN_URL = f"https://api.jsonbin.io/v3/b/{JSONBIN_ID}"
+
+headers = {
+    'Content-Type': 'application/json',
+    'X-Master-Key': JSONBIN_API_KEY
+}
+
+def get_reviews():
+    response = requests.get(JSONBIN_URL, headers=headers)
+    if response.status_code == 200:
+        return response.json().get('record', [])
+    return []
+
+def save_reviews(reviews):
+    requests.put(JSONBIN_URL, headers=headers, json=reviews)
 
 # Admin credentials
 USERNAME = 'faisal'
@@ -75,9 +94,12 @@ def resume():
 @app.route('/reviews')
 def reviews():
     reviews_data = []
-    if os.path.exists(REVIEWS_FILE):
-        with open(REVIEWS_FILE, 'r', encoding='utf-8') as f:
-            reviews_data = json.load(f)
+    try:
+        response = requests.get(JSONBIN_URL + '/latest', headers=JSONBIN_HEADERS)
+        if response.status_code == 200:
+            reviews_data = response.json()['record']
+    except Exception as e:
+        print("Error fetching reviews from JSONBin:", str(e))
     return render_template('reviews.html', reviews=reviews_data)
 
 @app.route('/submit_review', methods=['POST'])
@@ -87,7 +109,7 @@ def submit_review():
     rating = int(request.form.get('rating'))
     comment = request.form.get('comment')
 
-    review = {
+    new_review = {
         'name': name,
         'email': email,
         'rating': rating,
@@ -95,15 +117,23 @@ def submit_review():
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
-    reviews = []
-    if os.path.exists(REVIEWS_FILE):
-        with open(REVIEWS_FILE, 'r', encoding='utf-8') as f:
-            reviews = json.load(f)
+    try:
+        # Fetch existing reviews
+        response = requests.get(JSONBIN_URL + '/latest', headers=JSONBIN_HEADERS)
+        if response.status_code == 200:
+            reviews = response.json()['record']
+        else:
+            reviews = []
 
-    reviews.append(review)
+        reviews.append(new_review)
 
-    with open(REVIEWS_FILE, 'w', encoding='utf-8') as f:
-        json.dump(reviews, f, indent=2)
+        # Update bin with new review list
+        update_response = requests.put(JSONBIN_URL, headers=JSONBIN_HEADERS, json=reviews)
+        if update_response.status_code != 200:
+            print("Error saving review to JSONBin:", update_response.text)
+
+    except Exception as e:
+        print("Error submitting review:", str(e))
 
     return redirect(url_for('reviews'))
 
