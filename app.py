@@ -94,7 +94,7 @@ def resume():
 @app.route('/reviews')
 def reviews():
     reviews = sorted(get_reviews(), key=lambda x: x['timestamp'], reverse=True)
-    return render_template('reviews.html', reviews=get_reviews())
+    return render_template('reviews.html', reviews=reviews)
 
 @app.route('/submit_review', methods=['POST'])
 def submit_review():
