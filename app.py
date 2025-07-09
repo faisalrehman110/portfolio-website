@@ -8,8 +8,8 @@ import requests
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Replace with a strong secret key
 
-JSONBIN_ID = '686ebb23e3d25703b38ccbf3'
-JSONBIN_API_KEY = '$2a$10$H7CrjqiobZvthbDRzEh5zuPI0g3q8ehkvBVsutFAgBfRl983upnyS'
+JSONBIN_ID = os.environ.get("JSONBIN_ID")
+JSONBIN_API_KEY = os.environ.get("JSONBIN_API_KEY")
 JSONBIN_URL = f"https://api.jsonbin.io/v3/b/{JSONBIN_ID}"
 
 headers = {
