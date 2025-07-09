@@ -93,42 +93,25 @@ def resume():
 
 @app.route('/reviews')
 def reviews():
-    reviews_data = []
-    try:
-        response = requests.get(JSONBIN_URL + '/latest', headers=JSONBIN_HEADERS)
-        if response.status_code == 200:
-            reviews_data = response.json()['record']
-    except Exception as e:
-        print("Error fetching reviews from JSONBin:", str(e))
-    return render_template('reviews.html', reviews=reviews_data)
+    reviews = sorted(get_reviews(), key=lambda x: x['timestamp'], reverse=True)
+    return render_template('reviews.html', reviews=get_reviews())
 
 @app.route('/submit_review', methods=['POST'])
 def submit_review():
-    name = request.form.get('name')
-    email = request.form.get('email')
-    rating = int(request.form.get('rating'))
-    comment = request.form.get('comment')
-
     new_review = {
-        'name': name,
-        'email': email,
-        'rating': rating,
-        'comment': comment,
+        'name': request.form.get('name'),
+        'email': request.form.get('email'),
+        'rating': int(request.form.get('rating')),
+        'comment': request.form.get('comment'),
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
     try:
-        # Fetch existing reviews
-        response = requests.get(JSONBIN_URL + '/latest', headers=JSONBIN_HEADERS)
-        if response.status_code == 200:
-            reviews = response.json()['record']
-        else:
-            reviews = []
-
+        # Use helper function instead of repeating API call
+        reviews = get_reviews()
         reviews.append(new_review)
 
-        # Update bin with new review list
-        update_response = requests.put(JSONBIN_URL, headers=JSONBIN_HEADERS, json=reviews)
+        update_response = requests.put(JSONBIN_URL, headers=headers, json=reviews)
         if update_response.status_code != 200:
             print("Error saving review to JSONBin:", update_response.text)
 
